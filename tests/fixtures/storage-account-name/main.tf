@@ -4,7 +4,7 @@ variable "website_name" {
 
 module "staticwebpage" {
   source       = "../../../modules/web-site/"
-  location     = "westus"
+  location     = "eastus"
   website_name = "${var.website_name}"
   html_path    = "empty.html"
 }

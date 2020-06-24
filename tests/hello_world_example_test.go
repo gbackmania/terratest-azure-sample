@@ -1,6 +1,8 @@
 package test
 
+//go get "github.com/gruntwork-io/terratest/modules/http-helper"
 import (
+	"crypto/tls"
 	"fmt"
 	"strings"
 	"testing"
@@ -16,6 +18,9 @@ func TestIT_HelloWorldExample(t *testing.T) {
 	// Generate a random website name to prevent a naming conflict
 	uniqueID := random.UniqueId()
 	websiteName := fmt.Sprintf("Hello-World-%s", uniqueID)
+
+	// Setup a TLS configuration to submit with the helper, a blank struct is acceptable
+	tlsConfig := tls.Config{}
 
 	// Specify the test case folder and "-var" options
 	tfOptions := &terraform.Options{
@@ -33,7 +38,7 @@ func TestIT_HelloWorldExample(t *testing.T) {
 	homepage := terraform.Output(t, tfOptions, "homepage")
 
 	// Validate the provisioned webpage
-	http_helper.HttpGetWithCustomValidation(t, homepage, func(status int, content string) bool {
+	http_helper.HttpGetWithCustomValidation(t, homepage, &tlsConfig, func(status int, content string) bool {
 		return status == 200 &&
 			strings.Contains(content, "Hi, Terraform Module") &&
 			strings.Contains(content, "This is a sample web page to demonstrate Terratest.")

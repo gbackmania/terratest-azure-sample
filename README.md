@@ -122,8 +122,9 @@ The key parts here are
 
 In order to run the tests, we need to download the dependencies
 
-1. **dep init -v** (run only once at the beginning)
-2. **dep ensure -v** (needs to be rerun if you import new packages)
+1. go get -u "github.com/gruntwork-io/terratest/modules/http-helper"
+2. go get -u "github.com/gruntwork-io/terratest/modules/random"
+3. go get -u "github.com/gruntwork-io/terratest/modules/terraform"
 
 Run the test
 ~~~

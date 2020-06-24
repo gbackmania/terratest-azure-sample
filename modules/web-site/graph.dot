@@ -1,0 +1,31 @@
+digraph {
+	compound = "true"
+	newrank = "true"
+	subgraph "root" {
+		"[root] azurerm_resource_group.main" [label = "azurerm_resource_group.main", shape = "box"]
+		"[root] azurerm_storage_account.main" [label = "azurerm_storage_account.main", shape = "box"]
+		"[root] azurerm_storage_blob.homepage" [label = "azurerm_storage_blob.homepage", shape = "box"]
+		"[root] azurerm_storage_container.main" [label = "azurerm_storage_container.main", shape = "box"]
+		"[root] output.homepage_url" [label = "output.homepage_url", shape = "note"]
+		"[root] output.storage_name" [label = "output.storage_name", shape = "note"]
+		"[root] provider.azurerm" [label = "provider.azurerm", shape = "diamond"]
+		"[root] var.html_path" [label = "var.html_path", shape = "note"]
+		"[root] var.location" [label = "var.location", shape = "note"]
+		"[root] var.website_name" [label = "var.website_name", shape = "note"]
+		"[root] azurerm_resource_group.main" -> "[root] provider.azurerm"
+		"[root] azurerm_resource_group.main" -> "[root] var.location"
+		"[root] azurerm_resource_group.main" -> "[root] var.website_name"
+		"[root] azurerm_storage_account.main" -> "[root] azurerm_resource_group.main"
+		"[root] azurerm_storage_blob.homepage" -> "[root] azurerm_storage_container.main"
+		"[root] azurerm_storage_blob.homepage" -> "[root] var.html_path"
+		"[root] azurerm_storage_container.main" -> "[root] azurerm_storage_account.main"
+		"[root] meta.count-boundary (EachMode fixup)" -> "[root] output.homepage_url"
+		"[root] meta.count-boundary (EachMode fixup)" -> "[root] output.storage_name"
+		"[root] output.homepage_url" -> "[root] azurerm_storage_blob.homepage"
+		"[root] output.storage_name" -> "[root] azurerm_storage_account.main"
+		"[root] provider.azurerm (close)" -> "[root] azurerm_storage_blob.homepage"
+		"[root] root" -> "[root] meta.count-boundary (EachMode fixup)"
+		"[root] root" -> "[root] provider.azurerm (close)"
+	}
+}
+
